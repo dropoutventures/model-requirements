@@ -3,17 +3,14 @@
 namespace DropoutVentures\ModelRequirementSettings\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use DropoutVentures\ModelRequirementSettings\Models\Requirement;
 
-/*
-class ModelFactory extends Factory
+class RequirementFactory extends Factory
 {
-    protected $model = YourModel::class;
+    protected $model = Requirement::class;
 
     public function definition()
     {
-        return [
-
-        ];
+        return [];
     }
 }
-*/

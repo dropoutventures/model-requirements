@@ -19,7 +19,7 @@ class ModelRequirementSettingsServiceProvider extends PackageServiceProvider
             ->name('model-requirement-settings')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_model-requirement-settings_table')
+            ->hasMigration('create_requirements_table')
             ->hasCommand(ModelRequirementSettingsCommand::class);
     }
 }
