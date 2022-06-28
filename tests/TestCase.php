@@ -2,9 +2,9 @@
 
 namespace DropoutVentures\ModelRequirementSettings\Tests;
 
+use DropoutVentures\ModelRequirementSettings\ModelRequirementSettingsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DropoutVentures\ModelRequirementSettings\ModelRequirementSettingsServiceProvider;
 
 class TestCase extends Orchestra
 {

@@ -2,9 +2,9 @@
 
 namespace DropoutVentures\ModelRequirementSettings;
 
+use DropoutVentures\ModelRequirementSettings\Commands\ModelRequirementSettingsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use DropoutVentures\ModelRequirementSettings\Commands\ModelRequirementSettingsCommand;
 
 class ModelRequirementSettingsServiceProvider extends PackageServiceProvider
 {
