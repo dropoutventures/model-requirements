@@ -2,8 +2,8 @@
 
 namespace DropoutVentures\ModelRequirementSettings\Models;
 
-use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 class ModelRequirement extends MorphPivot
 {

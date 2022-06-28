@@ -4,14 +4,15 @@ namespace DropoutVentures\ModelRequirementSettings\Traits;
 
 use DropoutVentures\ModelRequirementSettings\Models\ModelRequirement;
 use DropoutVentures\ModelRequirementSettings\Models\Requirement;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-
 use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 
 trait HasRequirements
 {
-    protected static function bootHasRequirements(): void {
+    protected static function bootHasRequirements(): void
+    {
         static::retrieved(function ($model) {
             $model->makeHidden(['requirement_type']);
             $model->requirement_type = __CLASS__;
@@ -23,7 +24,9 @@ trait HasRequirements
      */
     public function requirementsRelationship(): MorphToMany
     {
-        return $this->morphToMany(Requirement::class, 'model',
+        return $this->morphToMany(
+            Requirement::class,
+            'model',
             'model_requirements',
             'model_type', // $pivot->model_type : $this->requirement_type
             'requirement_id', // $pivot->requirement_id : $requirement->id
@@ -41,26 +44,32 @@ trait HasRequirements
     public function requirements(): Collection
     {
         return $this->requirementsRelationship->filter(
-            function($requirement) {
+            function ($requirement) {
                 // GUARD: Filter If Any Attributes Doesn't Match
                 if (! $requirement->requiredModel->match
-                        ->every(fn($value, $attribute) => $this->{$attribute}===$value)
-                ) { return false; }
+                        ->every(fn ($value, $attribute) => $this->{$attribute} === $value)
+                ) {
+                    return false;
+                }
                 // GUARD: Return If No Relationship OR No Parent
                 if (
                     $requirement->requiredModel->relationships->isEmpty()
                     || empty($requirement->parent)
-                ) { return true; }
+                ) {
+                    return true;
+                }
 
                 // Relationships: ['class'=>'method','class'=>'method'] ...
-                $relationship = $requirement->requiredModel->relationships->reduce(fn($return, $relation) =>
+                $relationship = $requirement->requiredModel->relationships->reduce(
+                    fn ($return, $relation) =>
                     match (true) {
                         $return instanceof Model
                             => $return->{$relation},
                         $return instanceof Collection
                             => $return->pluck($relation)->flatten()->unique('id'),
                         default => false,
-                    }, $this->load($requirement->requiredModel->relationships->implode('.'))
+                    },
+                    $this->load($requirement->requiredModel->relationships->implode('.'))
                 );
 
                 return match (true) {
