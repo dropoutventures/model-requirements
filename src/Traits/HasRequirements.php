@@ -5,7 +5,6 @@ namespace DropoutVentures\ModelRequirementSettings\Traits;
 use DropoutVentures\ModelRequirementSettings\Models\ModelRequirement;
 use DropoutVentures\ModelRequirementSettings\Models\Requirement;
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 
