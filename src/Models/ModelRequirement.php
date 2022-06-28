@@ -1,6 +1,6 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Models;
+namespace DropoutVentures\ModelRequirements\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;

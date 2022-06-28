@@ -1,9 +1,9 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Database\Factories;
+namespace DropoutVentures\ModelRequirements\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use DropoutVentures\ModelRequirementSettings\Models\Requirement;
+use DropoutVentures\ModelRequirements\Models\Requirement;
 
 class RequirementFactory extends Factory
 {

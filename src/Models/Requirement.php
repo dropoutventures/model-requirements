@@ -1,6 +1,6 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Models;
+namespace DropoutVentures\ModelRequirements\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

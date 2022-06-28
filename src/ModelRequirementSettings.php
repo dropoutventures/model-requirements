@@ -1,7 +1,7 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings;
+namespace DropoutVentures\ModelRequirements;
 
-class ModelRequirementSettings
+class ModelRequirements
 {
 }

@@ -1,5 +1,5 @@
 <?php
-// config for DropoutVentures/ModelRequirementSettings
+// config for DropoutVentures/ModelRequirements
 return [
 
 ];

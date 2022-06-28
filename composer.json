@@ -1,12 +1,12 @@
 {
-    "name": "dropoutventures/model-requirement-settings",
-    "description": "This is my package model-requirement-settings",
+    "name": "dropoutventures/model-requirements",
+    "description": "This is my package model-requirements",
     "keywords": [
         "DropoutVentures",
         "laravel",
-        "model-requirement-settings"
+        "model-requirements"
     ],
-    "homepage": "https://github.com/dropoutventures/model-requirement-settings",
+    "homepage": "https://github.com/dropoutventures/model-requirements",
     "license": "MIT",
     "authors": [
         {
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "DropoutVentures\\ModelRequirementSettings\\": "src",
-            "DropoutVentures\\ModelRequirementSettings\\Database\\Factories\\": "database/factories"
+            "DropoutVentures\\ModelRequirements\\": "src",
+            "DropoutVentures\\ModelRequirements\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DropoutVentures\\ModelRequirementSettings\\Tests\\": "tests"
+            "DropoutVentures\\ModelRequirements\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -60,10 +60,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "DropoutVentures\\ModelRequirementSettings\\ModelRequirementSettingsServiceProvider"
+                "DropoutVentures\\ModelRequirements\\ModelRequirementsServiceProvider"
             ],
             "aliases": {
-                "ModelRequirementSettings": "DropoutVentures\\ModelRequirementSettings\\Facades\\ModelRequirementSettings"
+                "ModelRequirements": "DropoutVentures\\ModelRequirements\\Facades\\ModelRequirements"
             }
         }
     },

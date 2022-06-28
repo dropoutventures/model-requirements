@@ -1,9 +1,9 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Traits;
+namespace DropoutVentures\ModelRequirements\Traits;
 
-use DropoutVentures\ModelRequirementSettings\Models\ModelRequirement;
-use DropoutVentures\ModelRequirementSettings\Models\Requirement;
+use DropoutVentures\ModelRequirements\Models\ModelRequirement;
+use DropoutVentures\ModelRequirements\Models\Requirement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;

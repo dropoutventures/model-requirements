@@ -1,12 +1,12 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Commands;
+namespace DropoutVentures\ModelRequirements\Commands;
 
 use Illuminate\Console\Command;
 
-class ModelRequirementSettingsCommand extends Command
+class ModelRequirementsCommand extends Command
 {
-    public $signature = 'model-requirement-settings';
+    public $signature = 'model-requirements';
 
     public $description = 'My command';
 

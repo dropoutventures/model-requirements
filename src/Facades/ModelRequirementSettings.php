@@ -1,16 +1,16 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Facades;
+namespace DropoutVentures\ModelRequirements\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \DropoutVentures\ModelRequirementSettings\ModelRequirementSettings
+ * @see \DropoutVentures\ModelRequirements\ModelRequirements
  */
-class ModelRequirementSettings extends Facade
+class ModelRequirements extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'model-requirement-settings';
+        return 'model-requirements';
     }
 }

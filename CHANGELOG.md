@@ -1,3 +1,3 @@
 # Changelog
 
-All notable changes to `model-requirement-settings` will be documented in this file.
+All notable changes to `model-requirements` will be documented in this file.

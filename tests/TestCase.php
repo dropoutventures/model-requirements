@@ -1,8 +1,8 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings\Tests;
+namespace DropoutVentures\ModelRequirements\Tests;
 
-use DropoutVentures\ModelRequirementSettings\ModelRequirementSettingsServiceProvider;
+use DropoutVentures\ModelRequirements\ModelRequirementsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'DropoutVentures\\ModelRequirementSettings\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'DropoutVentures\\ModelRequirements\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            ModelRequirementSettingsServiceProvider::class,
+            ModelRequirementsServiceProvider::class,
         ];
     }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace DropoutVentures\ModelRequirementSettings;
+namespace DropoutVentures\ModelRequirements;
 
-use DropoutVentures\ModelRequirementSettings\Commands\ModelRequirementSettingsCommand;
+use DropoutVentures\ModelRequirements\Commands\ModelRequirementsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ModelRequirementSettingsServiceProvider extends PackageServiceProvider
+class ModelRequirementsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class ModelRequirementSettingsServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('model-requirement-settings')
+            ->name('model-requirements')
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_requirements_table')
-            ->hasCommand(ModelRequirementSettingsCommand::class);
+            ->hasCommand(ModelRequirementsCommand::class);
     }
 }
