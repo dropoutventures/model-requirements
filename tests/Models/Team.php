@@ -2,9 +2,7 @@
 
 namespace DropoutVentures\ModelRequirements\Tests\Models;
 
-use DropoutVentures\ModelRequirements\Tests\Database\factories\IntegrationFactory;
 use DropoutVentures\ModelRequirements\Tests\Database\factories\TeamFactory;
-use DropoutVentures\ModelRequirements\Traits\HasRequirements;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

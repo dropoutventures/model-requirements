@@ -1,19 +1,19 @@
 <?php
 
-use DropoutVentures\ModelRequirements\Models\Requirement;
 use DropoutVentures\ModelRequirements\Tests\Database\Seeders\TestModelsSeeder;
 use DropoutVentures\ModelRequirements\Tests\Models\Action;
 use DropoutVentures\ModelRequirements\Tests\Models\Brand;
 use DropoutVentures\ModelRequirements\Tests\Models\enums\InputType;
 use DropoutVentures\ModelRequirements\Tests\Models\Funnel;
 use DropoutVentures\ModelRequirements\Tests\Models\Input;
+use DropoutVentures\ModelRequirements\Tests\Models\Integration;
 use DropoutVentures\ModelRequirements\Tests\Models\Page;
 use DropoutVentures\ModelRequirements\Tests\Models\Team;
-use DropoutVentures\ModelRequirements\Tests\Models\Integration;
 use DropoutVentures\ModelRequirements\Tests\Models\Theme;
 
-test('Integration:Twilio OwnsRequirements -> 2:[Phone,2FA]',
-    function() {
+test(
+    'Integration:Twilio OwnsRequirements -> 2:[Phone,2FA]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
         $requirements = Integration::firstWhere('name', 'Twilio')->requirements->pluck('field');
@@ -22,11 +22,12 @@ test('Integration:Twilio OwnsRequirements -> 2:[Phone,2FA]',
     }
 );
 
-test('Input:Phone HasRequirements -> 3:[Classes,Error,Phone]',
-    function() {
+test(
+    'Input:Phone HasRequirements -> 3:[Classes,Error,Phone]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
-        $input = Input::factory(['label'=>'Phone', 'type'=>InputType::Phone, 'required'=>true])
+        $input = Input::factory(['label' => 'Phone', 'type' => InputType::Phone, 'required' => true])
             ->for(Team::firstWhere('name', 'DropoutVentures'))
             ->create();
 
@@ -36,11 +37,12 @@ test('Input:Phone HasRequirements -> 3:[Classes,Error,Phone]',
     }
 );
 
-test('Input:Email HasRequirements -> 1:[Classes]',
-    function() {
+test(
+    'Input:Email HasRequirements -> 1:[Classes]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
-        $input = Input::factory(['label'=>'Email', 'type'=>InputType::Email])
+        $input = Input::factory(['label' => 'Email', 'type' => InputType::Email])
             ->for(Team::firstWhere('name', 'DropoutVentures'))
             ->create();
 
@@ -50,11 +52,12 @@ test('Input:Email HasRequirements -> 1:[Classes]',
     }
 );
 
-test('Input:Checkbox HasRequirements -> 4:[Classes,Error,Images,Auto_Submit]',
-    function() {
+test(
+    'Input:Checkbox HasRequirements -> 4:[Classes,Error,Images,Auto_Submit]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
-        $input = Input::factory(['label'=>'Checkbox', 'type'=>InputType::Checkbox, 'required'=>true])
+        $input = Input::factory(['label' => 'Checkbox', 'type' => InputType::Checkbox, 'required' => true])
             ->for(Team::firstWhere('name', 'DropoutVentures'))
             ->create();
 
@@ -64,8 +67,9 @@ test('Input:Checkbox HasRequirements -> 4:[Classes,Error,Images,Auto_Submit]',
     }
 );
 
-test('Brand HasRequirements -> 3:[Logo,Color1,Color2]',
-    function() {
+test(
+    'Brand HasRequirements -> 3:[Logo,Color1,Color2]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
         $brand = Brand::factory(['domain' => 'twosettings.com'])
@@ -79,8 +83,9 @@ test('Brand HasRequirements -> 3:[Logo,Color1,Color2]',
     }
 );
 
-test('Page+Action HasRequirements -> 1:[2FA]',
-    function() {
+test(
+    'Page+Action HasRequirements -> 1:[2FA]',
+    function () {
         $this->seed(TestModelsSeeder::class);
 
         $funnel = Funnel::factory()
@@ -95,4 +100,3 @@ test('Page+Action HasRequirements -> 1:[2FA]',
             ->and($requirements->toArray())->toEqualCanonicalizing(['2fa']);
     }
 );
-

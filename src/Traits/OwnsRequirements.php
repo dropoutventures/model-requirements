@@ -2,8 +2,8 @@
 
 namespace DropoutVentures\ModelRequirements\Traits;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use DropoutVentures\ModelRequirements\Models\Requirement;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait OwnsRequirements
 {

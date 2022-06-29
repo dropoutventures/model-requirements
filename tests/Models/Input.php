@@ -2,14 +2,11 @@
 
 namespace DropoutVentures\ModelRequirements\Tests\Models;
 
-use DropoutVentures\ModelRequirements\Models\Requirement;
 use DropoutVentures\ModelRequirements\Tests\Database\factories\InputFactory;
-use DropoutVentures\ModelRequirements\Tests\Database\factories\IntegrationFactory;
 use DropoutVentures\ModelRequirements\Tests\Models\enums\InputType;
 use DropoutVentures\ModelRequirements\Traits\HasRequirements;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Input extends Model
 {
@@ -19,7 +16,7 @@ class Input extends Model
     protected $guarded = [];
 
     protected $casts = [
-      'type' => InputType::class
+      'type' => InputType::class,
     ];
 
     public function team()

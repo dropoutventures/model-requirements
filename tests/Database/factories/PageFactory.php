@@ -2,7 +2,6 @@
 
 namespace DropoutVentures\ModelRequirements\Tests\Database\factories;
 
-use DropoutVentures\ModelRequirements\Tests\Models\Integration;
 use DropoutVentures\ModelRequirements\Tests\Models\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

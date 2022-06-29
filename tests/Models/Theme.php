@@ -3,10 +3,9 @@
 namespace DropoutVentures\ModelRequirements\Tests\Models;
 
 use DropoutVentures\ModelRequirements\Tests\Database\factories\ThemeFactory;
-use Illuminate\Database\Eloquent\Model;
 use DropoutVentures\ModelRequirements\Traits\OwnsRequirements;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use DropoutVentures\ModelRequirements\Tests\Database\factories\IntegrationFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Theme extends Model
 {

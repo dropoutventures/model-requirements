@@ -2,12 +2,9 @@
 
 namespace DropoutVentures\ModelRequirements\Tests\Models;
 
-use DropoutVentures\ModelRequirements\Models\Requirement;
 use DropoutVentures\ModelRequirements\Tests\Database\factories\ActionFactory;
-use DropoutVentures\ModelRequirements\Tests\Database\factories\IntegrationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Action extends Model
 {

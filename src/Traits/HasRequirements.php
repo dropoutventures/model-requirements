@@ -55,7 +55,8 @@ trait HasRequirements
                 if ($requirement->requiredModel->match
                     && $requirement->requiredModel->match->isNotEmpty()
                     && ! $requirement->requiredModel->match
-                        ->every(fn ($value, $attribute) =>
+                        ->every(
+                            fn ($value, $attribute) =>
                             (($attributeValue = $this->{$attribute}) instanceof \BackedEnum)
                                 ? $attributeValue->value === $value
                                 : $attributeValue === $value
