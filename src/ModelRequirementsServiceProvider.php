@@ -18,7 +18,6 @@ class ModelRequirementsServiceProvider extends PackageServiceProvider
         $package
             ->name('model-requirements')
             ->hasConfigFile()
-            ->hasViews()
             ->hasMigration('create_requirements_table')
             ->hasCommand(ModelRequirementsCommand::class);
     }

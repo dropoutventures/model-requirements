@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 class ModelRequirement extends MorphPivot
 {
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
         'relationships' => 'collection',
         'match' => 'collection',

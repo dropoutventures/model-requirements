@@ -4,6 +4,8 @@ namespace DropoutVentures\ModelRequirements\Tests;
 
 use DropoutVentures\ModelRequirements\ModelRequirementsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -26,7 +28,11 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        $migration = include __DIR__.'/../database/migrations/create_requirements_table.php';
+        config()->set('database.default', 'testing');
+
+        $migration = include __DIR__.'/../database/migrations/create_requirements_table.php.stub';
+        $migration->up();
+        $migration = include __DIR__ . '/Database/migrations/create_test_models_table.php.stub';
         $migration->up();
     }
 }
