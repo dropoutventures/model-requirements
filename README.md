@@ -1,6 +1,12 @@
 
 # Laravel Model Requirements
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/dropoutventures/model-requirements.svg?style=for-the-badge)](https://packagist.org/packages/dropoutventures/model-requirements)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/dropoutventures/model-requirements/main?style=for-the-badge)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/dropoutventures/model-requirements/run-tests?label=tests&style=for-the-badge)](https://github.com/dropoutventures/model-requirements/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/dropoutventures/model-requirements/Check%20&%20fix%20styling?label=code%20style&style=for-the-badge)](https://github.com/dropoutventures/model-requirements/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+
+
 With this package you can assign requirements to models based on their relationships. Requirements should be used where you are expecting some sort of Setting to be saved. The Requirement model can be expanded to add other fields like if the rquirement is optional, what type of input the field should be, and more.
 
 **Examples**
