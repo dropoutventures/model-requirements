@@ -1,6 +1,6 @@
 {
     "name": "dropoutventures/model-requirements",
-    "description": "This is my package model-requirements",
+    "description": "Laravel Model Requirements",
     "keywords": [
         "DropoutVentures",
         "laravel",

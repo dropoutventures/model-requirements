@@ -1,6 +1,6 @@
 <?php
 
-namespace DropoutVentures\ModelRequirements\Tests\Database\Seeders;
+namespace DropoutVentures\ModelRequirements\Tests\Database;
 
 use DropoutVentures\ModelRequirements\Models\Requirement;
 use DropoutVentures\ModelRequirements\Tests\Models\Action;

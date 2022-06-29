@@ -14,14 +14,14 @@ class Requirement extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = ['label', 'field'];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'isRelationship' => 'boolean',

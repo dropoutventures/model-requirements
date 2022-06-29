@@ -1,6 +1,6 @@
 <?php
 
-use DropoutVentures\ModelRequirements\Tests\Database\Seeders\TestModelsSeeder;
+use DropoutVentures\ModelRequirements\Tests\Database\TestModelsSeeder;
 use DropoutVentures\ModelRequirements\Tests\Models\Action;
 use DropoutVentures\ModelRequirements\Tests\Models\Brand;
 use DropoutVentures\ModelRequirements\Tests\Models\enums\InputType;

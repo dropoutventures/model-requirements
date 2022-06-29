@@ -17,7 +17,7 @@ class ModelRequirement extends MorphPivot
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'relationships' => 'collection',
