@@ -34,6 +34,7 @@ return new class extends Migration
             $table->foreignId('requirement_id');
             $table->string('model_type'); // NOTE: Targeted Model
             #
+            $table->boolean('pivot')->default(false); // With Pivot
             $table->json('relationships')->nullable(); // Relationship To?
             $table->json('match')->nullable(); // NOTE: Additional Attribute Matching
             #

@@ -91,6 +91,8 @@ test(
         $funnel = Funnel::factory()
             ->for(Team::firstWhere('name', 'DropoutVentures'))
             ->has(Page::factory())
+            ->has(Page::factory())
+            ->has(Page::factory())
             ->create();
 
         $funnel->pages->first()->actions()->attach(Action::firstWhere('name', '2FA'));
@@ -98,5 +100,49 @@ test(
         $requirements = $funnel->pages->first()->requirements->pluck('field');
         expect($requirements->count())->toEqual(1)
             ->and($requirements->toArray())->toEqualCanonicalizing(['2fa']);
+    }
+);
+
+test(
+    'Funnel+Page+Action HasRequirements -> 1:[campaign]',
+    function () {
+        $this->seed(TestModelsSeeder::class);
+
+        $funnel = Funnel::factory()
+            ->for(Team::firstWhere('name', 'DropoutVentures'))
+            ->has(Page::factory())
+            ->has(Page::factory())
+            ->has(Page::factory())
+            ->create();
+
+        $funnel->pages->first()->actions()->attach(Action::firstWhere('name', 'Do Something'));
+
+        $requirements = $funnel->requirements->pluck('field');
+        expect($requirements->count())->toEqual(1)
+            ->and($requirements->toArray())->toEqualCanonicalizing(['campaign']);
+    }
+);
+
+test(
+    'Page+Input (Pivot) HasRequirements -> 2:[Input,Classes]',
+    function () {
+        $this->seed(TestModelsSeeder::class);
+
+        $funnel = Funnel::factory()
+            ->for($team = Team::firstWhere('name', 'DropoutVentures'))
+            ->has(
+                Page::factory()
+                    ->has(
+                        Input::factory(['label' => 'TESTING', 'type' => InputType::Text])
+                            ->for($team)
+                    )
+            )
+            ->create();
+
+        $funnel->pages->first()->actions()->attach(Action::firstWhere('name', 'Do Something'));
+
+        $requirements = $funnel->pages()->first()->inputs->first()->requirements->pluck('field');
+        expect($requirements->count())->toEqual(2)
+            ->and($requirements->toArray())->toEqualCanonicalizing(['input','classes']);
     }
 );

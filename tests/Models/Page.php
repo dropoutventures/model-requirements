@@ -24,6 +24,11 @@ class Page extends Model
         return $this->belongsToMany(Action::class);
     }
 
+    public function inputs()
+    {
+        return $this->belongsToMany(Input::class);
+    }
+
     /**
      * Create a new factory instance for the model.
      *

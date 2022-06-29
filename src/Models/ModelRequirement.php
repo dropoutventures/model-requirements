@@ -20,6 +20,7 @@ class ModelRequirement extends MorphPivot
      * @var array<string, string>
      */
     protected $casts = [
+        'pivot' => 'boolean',
         'relationships' => 'collection',
         'match' => 'collection',
     ];

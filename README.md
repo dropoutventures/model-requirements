@@ -56,8 +56,10 @@ class Integration extends Model
     use OwnsRequirements;
     
     public function team(): BelongsTo
+    { ... }
     
     public function actions(): HasMany
+    { ... }
 }
 ```
 
@@ -65,10 +67,24 @@ class Integration extends Model
 Integration::factory(['name' => 'Twilio'])
     ->for($team)
     ->has(
-        Action::factory(['name' => '2FA'])
+        Action::factory(['name' => 'Send SMS'])
     )
     ->has(
-        Requirement::factory(['label' => '2 Factor Authentication', 'field' => '2fa'])
+        Requirement::factory(['label' => 'API Key', 'field' => 'api'])
+            ->hasModels([
+                'model_type' => Team::class,
+                'relationships' => ['funnels','pages','actions','integration'],
+            ])
+    )
+    ->has(
+        Requirement::factory(['label' => 'Verification SID', 'field' => 'sid'])
+            ->hasModels([
+                'model_type' => Funnel::class,
+                'relationships' => ['pages','actions','integration'],
+            ])
+    )
+    ->has(
+        Requirement::factory(['label' => 'From Number', 'field' => 'from_num'])
             ->hasModels([
                 'model_type' => Page::class,
                 'relationships' => ['actions','integration'],
@@ -79,7 +95,8 @@ Integration::factory(['name' => 'Twilio'])
             ->hasModels([
                 'model_type' => Input::class,
                 'match' => ['required' => true, 'type' => InputType::Phone],
-                'relationships' => ['team','integrations'],
+                'pivot' => true,
+                'relationships' => ['actions','integration'],
             ])
     )
     ->create();
@@ -96,62 +113,69 @@ class Page extends Model
     use HasRequirements;
     
     public function funnel(): BelongsTo
+    { ... }
     
     public function actions(): BelongsToMany
+    { ... }
+    
+    public function inputs(): BelongsToMany
+    { ... }
 }
 ```
-
+**/Seeders/FunnelPageSeeder.php**
 ```php
 $funnel = Funnel::factory()
     ->for($team)
+    ->has(
+        Page::factory()
+            ->has(
+                Input::factory(['type'=>InputType::Phone, 'required'=>true])
+                    ->for($team)
+            )
+    )
+    ->has(Page::factory())
     ->has(Page::factory())
     ->create();
 
-$funnel->pages->first()->actions()->attach(Action::firstWhere('name', '2FA'));
-
-return $funnel->pages->first()->requirements;
+$funnel->pages->first()->actions()->attach(Action::firstWhere('name', 'Send SMS'));
+```
+**/Controllers/FunnelPageController.php**
+```php
+return $funnel->requirements;
 /*
 Illuminate\Database\Eloquent\Collection {
   all: [
     App\Models\Requirement {
       ...
-      label: "2 Factor Authentication",
-      field: "2fa",
+      label: "API Key",
+      field: "api",
       requiredModel: App\Models\ModelRequirement {
-        model_type: "App\Models\Page",
-        relationships: ['actions','integration'],
-        match: null,
+        ...
       },
     },
   ]
 }
 */
 ```
-
-**/Models/Input.php**
 ```php
-class Input extends Model
-{
-    use HasRequirements;
-    
-    protected $casts = [
-      'type' => \Enums\InputType::class,
-    ];
-    
-    public function team(): BelongsTo
+return $funnel->pages->first()->requirements;
+/*
+Illuminate\Database\Eloquent\Collection {
+  all: [
+    App\Models\Requirement {
+      ...
+      label: "From Number",
+      field: "from_num",
+      requiredModel: App\Models\ModelRequirement {
+        ...
+      },
+    },
+  ]
 }
+*/
 ```
-
 ```php
-$input = Input::factory([
-    'label' => 'Checkbox',
-    'type' => InputType::Checkbox,
-    'required' => true
-])
-    ->for($team)
-    ->create();
-
-return $input->requirements;
+return $funnel->pages->first()->inputs->first()->requirements;
 /*
 Illuminate\Database\Eloquent\Collection {
   all: [
@@ -160,9 +184,7 @@ Illuminate\Database\Eloquent\Collection {
       label: "Phone Validation",
       field: "validation",
       requiredModel: App\Models\ModelRequirement {
-        model_type: "App\Models\Input",
-        relationships: ['team','integrations'],
-        match: null,
+        ...
       },
     },
   ]
@@ -172,6 +194,7 @@ Illuminate\Database\Eloquent\Collection {
 
 ## TODO List
 - [x] Enum Value Support
+- [x] Pivot Relationship Support
 - [ ] Relationship By Class Names
 - [ ] Require Another Model Instead of Parent
 

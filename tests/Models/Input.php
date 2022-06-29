@@ -24,6 +24,11 @@ class Input extends Model
         return $this->belongsTo(Team::class);
     }
 
+    public function pages()
+    {
+        return $this->belongsToMany(Page::class);
+    }
+
     /**
      * Create a new factory instance for the model.
      *

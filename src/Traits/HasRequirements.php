@@ -41,7 +41,7 @@ trait HasRequirements
         )
             ->using(ModelRequirement::class)
             ->as('requiredModel')
-            ->withPivot('relationships', 'match');
+            ->withPivot('pivot', 'relationships', 'match');
     }
 
     /**
@@ -51,7 +51,8 @@ trait HasRequirements
     {
         return $this->requirementsRelationship->filter(
             function ($requirement) {
-                // GUARD: Filter If Any Attributes Doesn't Match
+
+                // GUARD: Reject If Any Attributes Doesn't Match
                 if ($requirement->requiredModel->match
                     && $requirement->requiredModel->match->isNotEmpty()
                     && ! $requirement->requiredModel->match
@@ -64,6 +65,7 @@ trait HasRequirements
                 ) {
                     return false;
                 }
+
                 // GUARD: Return If No Relationship OR No Parent
                 if (
                     (
@@ -75,7 +77,17 @@ trait HasRequirements
                     return true;
                 }
 
-                // Relationships: ['class'=>'method','class'=>'method'] ...
+                // GUARD: Reject If Relationships Cannot Be Loaded
+                try {
+                    $relationship = (
+                        $requirement->requiredModel->pivot
+                        ? $this->pivot->pivotParent->load($requirement->requiredModel->relationships->implode('.'))
+                        : $this->load($requirement->requiredModel->relationships->implode('.'))
+                    );
+                } catch (\Exception $e) {
+                    return false;
+                }
+
                 $relationship = $requirement->requiredModel->relationships->reduce(
                     fn ($return, $relation) =>
                         match (true) {
@@ -85,7 +97,7 @@ trait HasRequirements
                                 => $return->pluck($relation)->flatten()->unique('id'),
                             default => false,
                         },
-                    $this->load($requirement->requiredModel->relationships->implode('.'))
+                    $relationship
                 );
 
                 return match (true) {

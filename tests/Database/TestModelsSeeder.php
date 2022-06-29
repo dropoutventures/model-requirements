@@ -6,6 +6,7 @@ use DropoutVentures\ModelRequirements\Models\Requirement;
 use DropoutVentures\ModelRequirements\Tests\Models\Action;
 use DropoutVentures\ModelRequirements\Tests\Models\Brand;
 use DropoutVentures\ModelRequirements\Tests\Models\enums\InputType;
+use DropoutVentures\ModelRequirements\Tests\Models\Funnel;
 use DropoutVentures\ModelRequirements\Tests\Models\Input;
 use DropoutVentures\ModelRequirements\Tests\Models\Integration;
 use DropoutVentures\ModelRequirements\Tests\Models\Page;
@@ -90,6 +91,24 @@ class TestModelsSeeder extends Seeder
 
         Integration::factory(['name' => 'Send Data'])
             ->for($team)
+            ->has(
+                Action::factory(['name' => 'Do Something'])
+            ) // Action: TwoFactorAuthentication
+            ->has(
+                Requirement::factory(['label' => 'Campaign ID', 'field' => 'campaign'])
+                    ->hasModels([
+                        'model_type' => Funnel::class,
+                        'relationships' => ['pages','actions','integration'],
+                    ])
+            ) // Requirement: 2FA [Page->Actions->Integrations]
+            ->has(
+                Requirement::factory(['label' => 'Input ID', 'field' => 'input'])
+                    ->hasModels([
+                        'model_type' => Input::class,
+                        'pivot' => true,
+                        'relationships' => ['actions','integration'],
+                    ])
+            ) // Requirement: 2FA [Page->Actions->Integrations]
             ->create();
 
         // Global Brand Requirements

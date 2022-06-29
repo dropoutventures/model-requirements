@@ -84,6 +84,13 @@ return new class extends Migration
             $table->boolean('required')->default(false);
             $table->timestamps();
         });
+
+        Schema::create('input_page', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('input_id');
+            $table->foreignId('page_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -102,5 +109,6 @@ return new class extends Migration
         Schema::dropIfExists('pages');
         Schema::dropIfExists('action_page');
         Schema::dropIfExists('inputs');
+        Schema::dropIfExists('input_page');
     }
 };
