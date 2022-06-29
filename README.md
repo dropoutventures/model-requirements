@@ -1,22 +1,13 @@
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+# Laravel Model Requirements
 
-# This is my package model-requirements
+With this package you can assign requirements to models based on their relationships. Requirements should be used where you are expecting some sort of Setting to be saved. The Requirement model can be expanded to add other fields like if the rquirement is optional, what type of input the field should be, and more.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/dropoutventures/model-requirements.svg?style=flat-square)](https://packagist.org/packages/dropoutventures/model-requirements)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/dropoutventures/model-requirements/run-tests?label=tests)](https://github.com/dropoutventures/model-requirements/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/dropoutventures/model-requirements/Check%20&%20fix%20styling?label=code%20style)](https://github.com/dropoutventures/model-requirements/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/dropoutventures/model-requirements.svg?style=flat-square)](https://packagist.org/packages/dropoutventures/model-requirements)
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/model-requirements.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/model-requirements)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+**Examples**
+- Add a Requirement to a Page using a specific Integration's Action
+- Add a Requirement to a Brand using a specific Theme
+- Add a Requirement to an Input if you are using a specific Integration
+- Add a Requirement to a Page if that page has a specific Input
 
 ## Installation
 
@@ -39,47 +30,148 @@ You can publish the config file with:
 php artisan vendor:publish --tag="model-requirements-config"
 ```
 
-This is the contents of the published config file:
+This is the contents of the default config file:
 
 ```php
 return [
+    // Currently There Is No Config
 ];
 ```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="model-requirements-views"
-```
-
 ## Usage
 
+### Owns Requirements
+
+Use the `OwnsRequirements` Trait on Models that will be the parent and create requirements.
+
+**/Models/Integration.php**
 ```php
-$ModelRequirements = new DropoutVentures\ModelRequirements();
-echo $ModelRequirements->echoPhrase('Hello, DropoutVentures!');
+class Integration extends Model
+{
+    use OwnsRequirements;
+    
+    public function team(): BelongsTo
+    
+    public function actions(): HasMany
+}
 ```
 
-## Testing
-
-```bash
-composer test
+```php
+Integration::factory(['name' => 'Twilio'])
+    ->for($team)
+    ->has(
+        Action::factory(['name' => '2FA'])
+    )
+    ->has(
+        Requirement::factory(['label' => '2 Factor Authentication', 'field' => '2fa'])
+            ->hasModels([
+                'model_type' => Page::class,
+                'relationships' => ['actions','integration'],
+            ])
+    )
+    ->has(
+        Requirement::factory(['label' => 'Phone Validation', 'field' => 'validation'])
+            ->hasModels([
+                'model_type' => Input::class,
+                'match' => ['required' => true, 'type' => InputType::Phone],
+                'relationships' => ['team','integrations'],
+            ])
+    )
+    ->create();
 ```
 
-## Changelog
+### Has Requirements
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Use the `HasRequirements` Trait on Models that will receive the requirements.
 
-## Contributing
+**/Models/Page.php**
+```php
+class Page extends Model
+{
+    use HasRequirements;
+    
+    public function funnel(): BelongsTo
+    
+    public function actions(): BelongsToMany
+}
+```
 
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
+```php
+$funnel = Funnel::factory()
+    ->for($team)
+    ->has(Page::factory())
+    ->create();
 
-## Security Vulnerabilities
+$funnel->pages->first()->actions()->attach(Action::firstWhere('name', '2FA'));
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+return $funnel->pages->first()->requirements;
+/*
+Illuminate\Database\Eloquent\Collection {
+  all: [
+    App\Models\Requirement {
+      ...
+      label: "2 Factor Authentication",
+      field: "2fa",
+      requiredModel: App\Models\ModelRequirement {
+        model_type: "App\Models\Page",
+        relationships: ['actions','integration'],
+        match: null,
+      },
+    },
+  ]
+}
+*/
+```
+
+**/Models/Input.php**
+```php
+class Input extends Model
+{
+    use HasRequirements;
+    
+    protected $casts = [
+      'type' => \Enums\InputType::class,
+    ];
+    
+    public function team(): BelongsTo
+}
+```
+
+```php
+$input = Input::factory([
+    'label' => 'Checkbox',
+    'type' => InputType::Checkbox,
+    'required' => true
+])
+    ->for($team)
+    ->create();
+
+return $input->requirements;
+/*
+Illuminate\Database\Eloquent\Collection {
+  all: [
+    App\Models\Requirement {
+      ...
+      label: "Phone Validation",
+      field: "validation",
+      requiredModel: App\Models\ModelRequirement {
+        model_type: "App\Models\Input",
+        relationships: ['team','integrations'],
+        match: null,
+      },
+    },
+  ]
+}
+*/
+```
+
+## TODO List
+- [x] Enum Value Support
+- [ ] Relationship By Class Names
+- [ ] Require Another Model Instead of Parent
 
 ## Credits
 
-- [jjjrmy](https://github.com/Leadobo)
+- [jjjrmy](https://github.com/jjjrmy)
 - [All Contributors](../../contributors)
 
 ## License
