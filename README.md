@@ -45,6 +45,14 @@ return [
 ```
 ## Usage
 
+### Global Requirements
+
+Sometimes you may need an application wide setting for a model type that doesn't have a specific parent.
+If there is no Parent for the Requirement it will not currently check the relationships, just check the matching attributes.
+
+https://github.com/dropoutventures/model-requirements/blob/d00e27e71035543718991d5c1304c6bf2366d02a/tests/Database/TestModelsSeeder.php#L120-L122
+> This applies the `classes` Requirement to all Input models.
+
 ### Owns Requirements
 
 Use the `OwnsRequirements` Trait on Models that will be the parent and create requirements.
@@ -179,6 +187,14 @@ return $funnel->pages->first()->inputs->first()->requirements;
 /*
 Illuminate\Database\Eloquent\Collection {
   all: [
+    App\Models\Requirement {
+      ...
+      label: "Input Class",
+      field: "css",
+      requiredModel: App\Models\ModelRequirement {
+        ...
+      },
+    },
     App\Models\Requirement {
       ...
       label: "Phone Validation",
